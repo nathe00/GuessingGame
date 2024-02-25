@@ -17,11 +17,13 @@
 <input type="text" id="guess" placeholder="Enter your guess">
 <button onclick="checkGuess()">Submit</button>
 <p id="result"></p>
+<p>Least attempts: <span id="leastAttempts">-</span></p>
 <button id="new-game-btn" onclick="newGame()">New Game</button>
 
 <script>
 var randomNumber; // Declare randomNumber variable
 var attempts; // Declare attempts variable
+var leastAttempts = Infinity; // Initialize leastAttempts to infinity
 
 newGame(); // Start a new game when the page loads
 
@@ -54,7 +56,15 @@ function checkGuess() {
             guessInput.disabled = true; // Disable input field
             document.querySelector("button").disabled = true; // Disable submit button
             document.getElementById("new-game-btn").style.display = "inline"; // Show New Game button
+            updateLeastAttempts(); // Update least attempts
         }
+    }
+}
+
+function updateLeastAttempts() {
+    if (attempts < leastAttempts) {
+        leastAttempts = attempts; // Update leastAttempts if current attempts is less
+        document.getElementById("leastAttempts").textContent = leastAttempts; // Display leastAttempts
     }
 }
 </script>
