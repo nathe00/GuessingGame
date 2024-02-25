@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Guessing Game</title>
+<style>
+#new-game-btn {
+    display: none; /* Hide the New Game button by default */
+}
+</style>
+</head>
+<body>
+<h1>Number Guessing Game</h1>
+
+<p>Try to guess the number between 1 and 100!</p>
+<input type="text" id="guess" placeholder="Enter your guess">
+<button onclick="checkGuess()">Submit</button>
+<p id="result"></p>
+<button id="new-game-btn" onclick="newGame()">New Game</button>
+
+<script>
+var randomNumber; // Declare randomNumber variable
+var attempts; // Declare attempts variable
+
+newGame(); // Start a new game when the page loads
+
+function newGame() {
+    randomNumber = Math.floor(Math.random() * 100) + 1; // Generate random number between 1 and 100
+    attempts = 0; // Reset attempts count
+    document.getElementById("guess").value = ""; // Clear input field
+    document.getElementById("result").textContent = ""; // Clear result message
+    document.getElementById("guess").disabled = false; // Enable input field
+    document.querySelector("button").disabled = false; // Enable submit button
+    document.getElementById("new-game-btn").style.display = "none"; // Hide New Game button
+}
+
+function checkGuess() {
+    var guessInput = document.getElementById("guess");
+    var guess = parseInt(guessInput.value);
+    var resultDisplay = document.getElementById("result");
+
+    if (isNaN(guess) || guess < 1 || guess > 100) {
+        resultDisplay.textContent = "Please enter a valid number between 1 and 100.";
+    } else {
+        attempts++; // Increment the attempt count
+
+        if (guess < randomNumber) {
+            resultDisplay.textContent = "Higher, try again.";
+        } else if (guess > randomNumber) {
+            resultDisplay.textContent = "Lower, try again.";
+        } else {
+            resultDisplay.textContent = "Correct! Congratulations. It took you " + attempts + " attempts.";
+            guessInput.disabled = true; // Disable input field
+            document.querySelector("button").disabled = true; // Disable submit button
+            document.getElementById("new-game-btn").style.display = "inline"; // Show New Game button
+        }
+    }
+}
+</script>
+
+</body>
+</html>
